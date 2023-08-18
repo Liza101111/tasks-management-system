@@ -11,6 +11,7 @@ public class Task {
     private Long id;
     private String name;
     private int timeSpent;
-    private String taskGroup;
+    @Enumerated(EnumType.STRING)
+    private TaskGroup group;
     private String assignee;
 }
