@@ -1,9 +1,7 @@
 package com.exercise.tasksmanagementsystem.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table
