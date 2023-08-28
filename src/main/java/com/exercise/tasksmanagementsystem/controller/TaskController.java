@@ -16,13 +16,13 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
-    @PostMapping("/save")
+    @PostMapping("/task")
     public ResponseEntity<Task> saveTask(@RequestBody Task task){
         Task savedTask = taskRepository.save(task);
         return new ResponseEntity<>(savedTask, HttpStatus.OK);
     }
 
-    @GetMapping("/tasks")
+    @GetMapping("/task")
     public ResponseEntity<List<Task>> listAllTasks(){
         List<Task> tasks = taskRepository.findAll();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
