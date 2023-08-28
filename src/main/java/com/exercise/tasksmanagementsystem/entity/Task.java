@@ -20,6 +20,6 @@ public class Task {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     @Enumerated(EnumType.STRING)
-    private TaskGroup group;
+    private TaskGroup taskGroup;
     private String assignee;
 }
