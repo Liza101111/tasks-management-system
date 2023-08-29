@@ -7,6 +7,9 @@ import com.exercise.tasksmanagementsystem.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TaskService {
     @Autowired
@@ -19,5 +22,12 @@ public class TaskService {
         Task task = taskMapper.toEntity(taskDto);
         task = taskRepository.save(task);
         return taskMapper.toDto(task);
+    }
+
+    public List<TaskDto> findAll(){
+        return taskRepository.findAll()
+                .stream()
+                .map(taskMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
