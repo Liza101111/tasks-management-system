@@ -25,9 +25,11 @@ public class TaskService {
     }
 
     public List<TaskDto> findAll(){
-        return taskRepository.findAll()
-                .stream()
-                .map(taskMapper::toDto)
-                .collect(Collectors.toList());
+        List<Task> tasks = taskRepository.findAll();
+        return taskMapper.toDtoList(tasks);
+//        return taskRepository.findAll()
+//                .stream()
+//                .map(taskMapper::toDto)
+//                .collect(Collectors.toList());
     }
 }
