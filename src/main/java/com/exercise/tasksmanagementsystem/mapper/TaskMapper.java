@@ -5,6 +5,9 @@ import com.exercise.tasksmanagementsystem.entity.Task;
 import com.exercise.tasksmanagementsystem.entity.TaskGroup;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class TaskMapper {
 
@@ -18,7 +21,6 @@ public class TaskMapper {
         dto.setAssignee(task.getAssignee());
         return dto;
     }
-
     public Task toEntity(TaskDto dto) {
         Task task = new Task();
         task.setId(dto.getId());
@@ -29,4 +31,22 @@ public class TaskMapper {
         task.setAssignee(dto.getAssignee());
         return task;
     }
+
+    public List<TaskDto> toDtoList(List<Task> tasks){
+        List<TaskDto> taskDtoList = new ArrayList<>();
+        for(Task task: tasks){
+            taskDtoList.add(toDto(task));
+        }
+        return taskDtoList;
+    }
+
+    public List<Task> toEntityList(List<TaskDto> taskDtos) {
+        List<Task> taskList = new ArrayList<>();
+        for(TaskDto taskDto: taskDtos){
+            taskList.add(toEntity(taskDto));
+        }
+        return taskList;
+    }
+
+
 }
