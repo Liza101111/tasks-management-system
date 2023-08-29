@@ -1,7 +1,9 @@
 package com.exercise.tasksmanagementsystem.controller;
 
+import com.exercise.tasksmanagementsystem.dto.TaskDto;
 import com.exercise.tasksmanagementsystem.entity.Task;
 import com.exercise.tasksmanagementsystem.repository.TaskRepository;
+import com.exercise.tasksmanagementsystem.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +16,18 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     @PostMapping("/task")
-    public ResponseEntity<Task> saveTask(@RequestBody Task task){
-        Task savedTask = taskRepository.save(task);
-        return new ResponseEntity<>(savedTask, HttpStatus.OK);
+    public ResponseEntity<TaskDto> saveTask(@RequestBody TaskDto taskDto){
+
+        return ResponseEntity.ok().body(taskService.save(taskDto));
     }
 
     @GetMapping("/task")
-    public ResponseEntity<List<Task>> listAllTasks(){
-        List<Task> tasks = taskRepository.findAll();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    public ResponseEntity<List<TaskDto>> getAllTasks(){
+
+        return ResponseEntity.ok().body(taskService.findAll());
     }
 
 }
