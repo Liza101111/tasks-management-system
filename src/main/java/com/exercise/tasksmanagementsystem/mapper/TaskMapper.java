@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Component
 public class TaskMapper {
-
     public TaskDto toDto(Task task) {
         TaskDto dto = new TaskDto();
         dto.setId(task.getId());
@@ -31,7 +29,6 @@ public class TaskMapper {
         task.setAssignee(dto.getAssignee());
         return task;
     }
-
     public List<TaskDto> toDtoList(List<Task> tasks){
         List<TaskDto> taskDtoList = new ArrayList<>();
         for(Task task: tasks){
@@ -48,5 +45,13 @@ public class TaskMapper {
         return taskList;
     }
 
+    public void updateEntityFromDto(Task task, TaskDto taskDto){
+        task.setId(taskDto.getId());
+        task.setName(taskDto.getName());
+        task.setStartDate(taskDto.getStartDate());
+        task.setEndDate(taskDto.getEndDate());
+        task.setTaskGroup(TaskGroup.valueOf(taskDto.getTaskGroup()));
+        task.setAssignee(taskDto.getAssignee());
+    }
 
 }
