@@ -12,22 +12,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/task")
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
-    @PostMapping("/task")
+    @PostMapping
     public ResponseEntity<TaskDto> saveTask(@RequestBody TaskDto taskDto){
 
         return ResponseEntity.ok().body(taskService.save(taskDto));
     }
 
-    @GetMapping("/task")
+    @GetMapping
     public ResponseEntity<List<TaskDto>> getAllTasks(){
 
         return ResponseEntity.ok().body(taskService.findAll());
+    }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Long taskId) {
+        TaskDto taskDto = taskService.findById(taskId);
+        return ResponseEntity.ok(taskDto);
     }
 
 }
