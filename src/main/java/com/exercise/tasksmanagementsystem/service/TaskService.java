@@ -41,5 +41,9 @@ public class TaskService {
         Task updatedTask = taskRepository.save(existingTask);
         return taskMapper.toDto(updatedTask);
     }
-
+    public void deleteTask(Long taskId){
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(()-> new ResourceNotFoundException("Task not found with id: " + taskId));
+        taskRepository.delete(task);
+    }
 }
