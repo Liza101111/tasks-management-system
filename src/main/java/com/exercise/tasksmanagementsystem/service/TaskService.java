@@ -29,11 +29,17 @@ public class TaskService {
 //                .map(taskMapper::toDto)
 //                .collect(Collectors.toList());
     }
-
     public TaskDto findById(Long taskId){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(()-> new ResourceNotFoundException("Task not found with id: " + taskId));
         return taskMapper.toDto(task);
+    }
+    public TaskDto updateTask(Long taskId, TaskDto updatedTaskDto) {
+        Task existingTask = taskRepository.findById(taskId)
+                .orElseThrow(()-> new ResourceNotFoundException("Task not found with id: " + taskId));
+        taskMapper.updateEntityFromDto(existingTask,updatedTaskDto);
+        Task updatedTask = taskRepository.save(existingTask);
+        return taskMapper.toDto(updatedTask);
     }
 
 }
