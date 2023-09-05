@@ -14,13 +14,16 @@ import java.util.stream.Collectors;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
+
     @Autowired
     private TaskMapper taskMapper;
+
     public TaskDto save(TaskDto taskDto){
         Task task = taskMapper.toEntity(taskDto);
         Task savedTask = taskRepository.save(task);
         return taskMapper.toDto(savedTask);
     }
+
     public List<TaskDto> findAll(){
         List<Task> tasks = taskRepository.findAll();
         return taskMapper.toDtoList(tasks);
@@ -29,11 +32,13 @@ public class TaskService {
 //                .map(taskMapper::toDto)
 //                .collect(Collectors.toList());
     }
+
     public TaskDto findById(Long taskId){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(()-> new ResourceNotFoundException("Task not found with id: " + taskId));
         return taskMapper.toDto(task);
     }
+
     public TaskDto updateTask(Long taskId, TaskDto updatedTaskDto) {
         Task existingTask = taskRepository.findById(taskId)
                 .orElseThrow(()-> new ResourceNotFoundException("Task not found with id: " + taskId));
@@ -41,6 +46,7 @@ public class TaskService {
         Task updatedTask = taskRepository.save(existingTask);
         return taskMapper.toDto(updatedTask);
     }
+
     public void deleteTask(Long taskId){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(()-> new ResourceNotFoundException("Task not found with id: " + taskId));
