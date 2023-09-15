@@ -14,6 +14,7 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
+
     @Test
     public void testSaveTask(){
         //Given
@@ -62,6 +63,24 @@ class TaskRepositoryTest {
         for(Task task: taskList){
             System.out.println(task);
         }
+    }
+
+    @Test
+    public void testFindById(){
+        Task task = new Task(
+                1L,
+                "Lucy",
+                LocalDateTime.now(),
+                LocalDateTime.now().plusDays(30),
+                TaskGroup.TASK_UNITY,
+                "Boss1"
+        );
+
+        taskRepository.save(task);
+
+        Task findTask = taskRepository.findById(task.getId()).get();
+
+        Assertions.assertThat(findTask).isNotNull();
     }
 
 }
