@@ -14,7 +14,6 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
-
     @Test
     public void testSaveTask(){
         //Given
@@ -38,7 +37,7 @@ class TaskRepositoryTest {
     @Test
     public void testFindAll(){
         Task task1 = new Task(
-                1L,
+                2L,
                 "Lucy",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(30),
@@ -46,7 +45,7 @@ class TaskRepositoryTest {
                 "Boss1"
         );
         Task task2 = new Task(
-                2L,
+                3L,
                 "Liza",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(100),
@@ -68,7 +67,7 @@ class TaskRepositoryTest {
     @Test
     public void testFindById(){
         Task task = new Task(
-                1L,
+                4L,
                 "Lucy",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(30),
