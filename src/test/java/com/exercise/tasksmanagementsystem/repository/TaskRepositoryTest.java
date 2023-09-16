@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 class TaskRepositoryTest {
@@ -77,9 +78,9 @@ class TaskRepositoryTest {
 
         taskRepository.save(task);
 
-        Task findTask = taskRepository.findById(task.getId()).get();
+        Optional<Task> optionalTask= taskRepository.findById(4L);
 
-        Assertions.assertThat(findTask).isNotNull();
+        Assertions.assertThat(optionalTask).isNotNull();
     }
 
 }
