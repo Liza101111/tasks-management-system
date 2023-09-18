@@ -20,7 +20,7 @@ class TaskRepositoryTest {
         //Given
         Task task = new Task(
                 1L,
-                "Lucy",
+                "task1",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(30),
                 TaskGroup.TASK_UNITY,
@@ -39,7 +39,7 @@ class TaskRepositoryTest {
     public void testFindAll(){
         Task task1 = new Task(
                 2L,
-                "Lucy",
+                "task2",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(30),
                 TaskGroup.TASK_UNITY,
@@ -47,7 +47,7 @@ class TaskRepositoryTest {
         );
         Task task2 = new Task(
                 3L,
-                "Liza",
+                "task3",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(100),
                 TaskGroup.TASK_FUSION,
@@ -69,7 +69,7 @@ class TaskRepositoryTest {
     public void testFindById(){
         Task task = new Task(
                 4L,
-                "Lucy",
+                "task4",
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(30),
                 TaskGroup.TASK_UNITY,
@@ -81,6 +81,29 @@ class TaskRepositoryTest {
         Optional<Task> optionalTask= taskRepository.findById(4L);
 
         Assertions.assertThat(optionalTask).isNotNull();
+    }
+
+    @Test
+    public void testUpdate(){
+        Task task = new Task(
+                5L,
+                "task5",
+                LocalDateTime.now(),
+                LocalDateTime.now().plusDays(30),
+                TaskGroup.TASK_UNITY,
+                "Boss1"
+        );
+
+        taskRepository.save(task);
+
+        Optional<Task> optionalTask = taskRepository.findById(task.getId());
+        Assertions.assertThat(optionalTask).isNotNull();
+
+        Task taskToUpdate = optionalTask.get();
+        taskToUpdate.setName("updated task");
+
+        Task updatedTask = taskRepository.save(taskToUpdate);
+        Assertions.assertThat(updatedTask.getName()).isEqualTo("updated task");
     }
 
 }
