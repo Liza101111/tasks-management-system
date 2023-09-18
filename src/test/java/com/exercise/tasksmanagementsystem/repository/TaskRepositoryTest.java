@@ -108,7 +108,20 @@ class TaskRepositoryTest {
 
     @Test
     public void testDeleteTask(){
+        Task task = new Task(
+                6L,
+                "task6",
+                LocalDateTime.now(),
+                LocalDateTime.now().plusDays(30),
+                TaskGroup.TASK_UNITY,
+                "Boss1"
+        );
 
+        taskRepository.save(task);
+        taskRepository.deleteById(task.getId());
+
+        Optional<Task> optionalTask = taskRepository.findById(task.getId());
+        Assertions.assertThat(optionalTask).isNotPresent();
     }
 
 }
