@@ -36,7 +36,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    public void testFindAll(){
+    public void testFindAllTasks(){
         Task task1 = new Task(
                 2L,
                 "task2",
@@ -66,7 +66,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindTaskById(){
         Task task = new Task(
                 4L,
                 "task4",
@@ -84,7 +84,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdateTask(){
         Task task = new Task(
                 5L,
                 "task5",
@@ -104,6 +104,11 @@ class TaskRepositoryTest {
 
         Task updatedTask = taskRepository.save(taskToUpdate);
         Assertions.assertThat(updatedTask.getName()).isEqualTo("updated task");
+    }
+
+    @Test
+    public void testDeleteTask(){
+
     }
 
 }
