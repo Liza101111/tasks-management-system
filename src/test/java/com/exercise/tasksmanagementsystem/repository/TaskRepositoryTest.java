@@ -76,11 +76,11 @@ class TaskRepositoryTest {
                 "Boss1"
         );
 
-        taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
 
-        Optional<Task> optionalTask= taskRepository.findById(4L);
+        Optional<Task> optionalTask= taskRepository.findById(savedTask.getId());
 
-        Assertions.assertThat(optionalTask).isNotNull();
+        Assertions.assertThat(optionalTask).isNotEmpty();
     }
 
     @Test
@@ -94,10 +94,10 @@ class TaskRepositoryTest {
                 "Boss1"
         );
 
-        taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
 
-        Optional<Task> optionalTask = taskRepository.findById(task.getId());
-        Assertions.assertThat(optionalTask).isNotNull();
+        Optional<Task> optionalTask = taskRepository.findById(savedTask.getId());
+        Assertions.assertThat(optionalTask).isNotEmpty();
 
         Task taskToUpdate = optionalTask.get();
         taskToUpdate.setName("updated task");
