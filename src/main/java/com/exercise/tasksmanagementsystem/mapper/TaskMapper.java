@@ -1,34 +1,56 @@
 package com.exercise.tasksmanagementsystem.mapper;
 
 import com.exercise.tasksmanagementsystem.dto.TaskDto;
+import com.exercise.tasksmanagementsystem.entity.SubTask;
 import com.exercise.tasksmanagementsystem.entity.Task;
 import com.exercise.tasksmanagementsystem.entity.TaskGroup;
+import com.exercise.tasksmanagementsystem.repository.SubTaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Component
 public class TaskMapper {
 
+    @Autowired
+    private SubTaskRepository subTaskRepository;
+
     public TaskDto toDto(Task task) {
-        TaskDto dto = new TaskDto();
-        dto.setId(task.getId());
-        dto.setName(task.getName());
-        dto.setStartDate(task.getStartDate());
-        dto.setEndDate(task.getEndDate());
-        dto.setTaskGroup(task.getTaskGroup().name());
-        dto.setAssignee(task.getAssignee());
-        return dto;
+        TaskDto taskDto = new TaskDto();
+        taskDto.setId(task.getId());
+        taskDto.setName(task.getName());
+        taskDto.setTaskGroup(task.getTaskGroup().name());
+        taskDto.setAssignee(task.getAssignee());
+
+        List<Long> subTaskIds = task.getSubTasks().stream()
+                .map(SubTask::getId)
+                .collect(Collectors.toList());
+        taskDto.setSubTaskIds(subTaskIds);
+
+        return taskDto;
     }
 
-    public Task toEntity(TaskDto dto) {
+    public Task toEntity(TaskDto taskDto) {
         Task task = new Task();
-        task.setId(dto.getId());
-        task.setName(dto.getName());
-        task.setStartDate(dto.getStartDate());
-        task.setEndDate(dto.getEndDate());
-        task.setTaskGroup(TaskGroup.valueOf(dto.getTaskGroup()));
-        task.setAssignee(dto.getAssignee());
+        task.setId(taskDto.getId());
+        task.setName(taskDto.getName());
+        task.setTaskGroup(TaskGroup.valueOf(taskDto.getTaskGroup()));
+        task.setAssignee(taskDto.getAssignee());
+
+        if (taskDto.getSubTaskIds() != null) {
+            List<SubTask> subTasks = taskDto.getSubTaskIds().stream()
+                    .map(subTaskId -> subTaskRepository.findById(subTaskId).orElse(null))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+            task.setSubTasks(subTasks);
+        } else {
+            task.setSubTasks(new ArrayList<>());
+        }
+
         return task;
     }
 
@@ -51,8 +73,6 @@ public class TaskMapper {
     public void updateEntityFromDto(Task task, TaskDto taskDto){
         task.setId(taskDto.getId());
         task.setName(taskDto.getName());
-        task.setStartDate(taskDto.getStartDate());
-        task.setEndDate(taskDto.getEndDate());
         task.setTaskGroup(TaskGroup.valueOf(taskDto.getTaskGroup()));
         task.setAssignee(taskDto.getAssignee());
     }
