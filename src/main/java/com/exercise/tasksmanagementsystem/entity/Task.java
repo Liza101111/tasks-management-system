@@ -28,6 +28,8 @@ public class Task {
     @ManyToMany
     @JoinTable(name = "task_subtask",
                joinColumns = @JoinColumn(name = "task_id"),
-               inverseJoinColumns = @JoinColumn(name = "subtask_id"))
+               inverseJoinColumns = @JoinColumn(name = "subtask_id"),
+               uniqueConstraints = @UniqueConstraint(columnNames = {
+                    "task_id", "subtask_id" }))
     private List<SubTask> subTasks;
 }
